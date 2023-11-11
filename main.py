@@ -1,3 +1,5 @@
+TOKEN = ''
+
 import discord
 from discord.ext import commands
 from discord import app_commands
@@ -101,7 +103,7 @@ async def search(interaction, book_title: str, language: discord.app_commands.Ch
     else:
         await interaction.response.send_message(f"Found {len(results)} results!", view=SelectView())
 
-client.run('MTE3MjU0Mzk2NzA4NzMwMDY1OA.GyOkNZ.rA2I6bxmCePBasJxCoX-WbE6BhTV5Az1sLTbBg')
+client.run(TOKEN)
 
 
 
