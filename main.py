@@ -1,4 +1,8 @@
-TOKEN = ''
+import json
+
+with open('config.json') as f:
+    config = json.load(f)
+    TOKEN = config['token']
 
 import discord
 from discord.ext import commands
