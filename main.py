@@ -12,6 +12,7 @@ from discord import Embed
 guild_ids_to_sync = []
 import libgen_api
 from libgen_api import LibgenSearch
+
 lgs = LibgenSearch()
 
 intents = discord.Intents.default()
