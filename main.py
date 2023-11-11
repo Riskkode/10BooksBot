@@ -106,7 +106,7 @@ async def search(interaction, book_title: str, language: discord.app_commands.Ch
     if len(results) == 0:
         await interaction.response.send_message("No results found!")
     else:
-        await interaction.response.send_message(f"Found {len(results)} results!", view=SelectView())
+        await interaction.response.send_message(f"Found {len(results)} results!", view=SelectView(), ephemeral=True)
 
 client.run(TOKEN)
 
