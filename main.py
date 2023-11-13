@@ -71,13 +71,13 @@ class SelectView(discord.ui.View):
 async def on_ready():
     print(f'We have logged in as {client.user}')
     try:
-        synced = await tree.sync()  # guild=discord.Object(id=1050223951655219221)
+        synced = await tree.sync()
         print(f"Synced {len(synced)} command(s)!")
     except Exception as e:
         print(e)
 
 
-@tree.command(name="search", description="Search for a book")  # guild=discord.Object(id=1050223951655219221) insert after book
+@tree.command(name="search", description="Search for a book")
 @app_commands.describe(book_title="Input a title to search.", language="Input a language to search.")
 @app_commands.choices(
     extension=[
