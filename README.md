@@ -21,6 +21,11 @@ This is a Discord bot written in Python using the Discord.py library and designe
       "token": "YOUR_DISCORD_BOT_TOKEN"
     }
     ```
+   
+   alternatively you can use commandline arguments to run the app with your token, useful for server deployments.
+   ```cmd
+   python main.py -t TOKEN
+   ```
 
 2. **Libgen API:**
    - The bot uses the Libgen API for book searches. No additional configuration is required for the Libgen API.

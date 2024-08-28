@@ -1,17 +1,24 @@
 import json
-
-with open('settings.json') as f:
-    config = json.load(f)
-    TOKEN = config['token']
-
+import sys
 import discord
 from discord.ext import commands
 from discord import app_commands
 from discord import Embed
+from libgen_api import LibgenSearch
 
 guild_ids_to_sync = []
-import libgen_api
-from libgen_api import LibgenSearch
+
+with open('settings.json') as f:
+    config = json.load(f)
+    TOKEN = config['token']
+    try:
+        if TOKEN == "" and sys.argv[1] == "-t" and sys.argv[2]:
+            TOKEN = sys.argv[2]
+        else:
+            print("NO TOKEN ENTERED")
+    except IndexError:
+        print("No Token entered")
+
 
 lgs = LibgenSearch()
 
@@ -23,11 +30,13 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 results = []
+
+
 def truncate_string(input_str, max_length=100):
     if len(input_str) <= max_length:
         return input_str
     else:
-        return input_str[:max_length-3] + "..."
+        return input_str[:max_length - 3] + "..."
 
 
 def get_book_by_id(book_id):
@@ -60,6 +69,7 @@ class Select(discord.ui.Select):
                 await interaction.followup.send("Error: Book not found!")
         except Exception as e:
             print(f"An error occurred: {e}")
+
 
 class SelectView(discord.ui.View):
     def __init__(self):
@@ -99,7 +109,8 @@ async def on_ready():
         discord.app_commands.Choice(name="Italian", value="Italian"),
         discord.app_commands.Choice(name="Korean", value="Korean")
     ])
-async def search(interaction, book_title: str, language: discord.app_commands.Choice[str], extension: discord.app_commands.Choice[str]):
+async def search(interaction, book_title: str, language: discord.app_commands.Choice[str],
+                 extension: discord.app_commands.Choice[str]):
     global results
     title_filters = {"Language": language.value, "Extension": extension.value}
     results = lgs.search_title_filtered(book_title, title_filters, exact_match=False)
@@ -108,7 +119,5 @@ async def search(interaction, book_title: str, language: discord.app_commands.Ch
     else:
         await interaction.response.send_message(f"Found {len(results)} results!", view=SelectView(), ephemeral=True)
 
+
 client.run(TOKEN)
-
-
-
